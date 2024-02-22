@@ -18,15 +18,18 @@ const Page = () => {
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
     console.log(process.env.NEXT_PUBLIC_NEXT_APP_URL);
-    const response = await fetch(`http://localhost:8000/api/auth/verify`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        otp,
-      }),
-    });
+    const response = await fetch(
+      `https://${process.env.NEXT_PUBLIC_NEXT_APP_URL}/api/auth/verify`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          otp,
+        }),
+      }
+    );
 
     if (response.ok) {
       const data = await response.json();

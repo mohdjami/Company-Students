@@ -21,7 +21,7 @@ const Page = () => {
     event.preventDefault();
     console.log(process.env.NEXT_PUBLIC_NEXT_APP_URL);
     const response = await fetch(
-      `http://localhost:8000/api/auth/student/signup`,
+      `https://${process.env.NEXT_PUBLIC_NEXT_APP_URL}/api/auth/student/signup`,
       {
         method: "POST",
         headers: {

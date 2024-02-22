@@ -14,7 +14,7 @@ import { Badge } from "lucide-react";
 
 export const StudentInterface = () => {
   const [loading, isLoading] = useState(true);
-  const [application, setApplication] = useState("");
+  const [transaction, setTransaction] = useState("");
   const [see, onSee] = useState(false);
 
   const rawToken = useContext(TokenContext);
@@ -23,9 +23,9 @@ export const StudentInterface = () => {
     const fetchTasks = async () => {
       if (rawToken) {
         isLoading(true);
-        const applications = await fetchTransactions(rawToken);
-        if (applications) {
-          setApplication(applications);
+        const transactions = await fetchTransactions(rawToken);
+        if (transactions) {
+          setTransaction(transactions);
           isLoading(false);
         }
       }
@@ -52,10 +52,7 @@ export const StudentInterface = () => {
             </CardDescription>
             <p className="mt-2 text-sm text-gray-500">Status</p>
 
-            <Badge className="mt-2">{status}</Badge>
-
             <div>
-              {" "}
               <Badge className="font-medium">Date</Badge>
             </div>
           </CardContent>

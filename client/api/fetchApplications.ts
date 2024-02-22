@@ -6,7 +6,7 @@ export async function fetchApplicationsByStudentId(rawToken: string) {
     const id = token.id;
     if (id) {
       const response = await fetch(
-        `http://localhost:8000/api/auth/applications`
+        `https://${process.env.NEXT_PUBLIC_NEXT_APP_URL}/api/auth/applications`
       );
       const data = await response.json();
       return data.applications;

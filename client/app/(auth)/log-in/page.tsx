@@ -19,18 +19,21 @@ const Page = () => {
   const handleSubmit = async (event: { preventDefault: () => void }) => {
     event.preventDefault();
     try {
-      const response = await fetch(`http://localhost:8000/api/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-          role,
-        }),
-      });
+      const response = await fetch(
+        `https://${process.env.NEXT_PUBLIC_NEXT_APP_URL}/api/auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            password,
+            role,
+          }),
+        }
+      );
       console.log(response);
       if (response.ok) {
         const data = await response.json();

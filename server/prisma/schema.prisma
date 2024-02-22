@@ -1,0 +1,81 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["mongodb"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+ 
+model Company {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  logo      String?   
+  email     String    @unique
+  password  String
+  code      String
+  active    Boolean  @default(true)
+  balance   Float    @default(200)
+  role     Roles?    @default(Company)
+  jobRoles  JobRole[]
+  transactions Transaction[]
+}
+
+model JobRole {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  minCTC    Float
+  maxCTC    Float
+  location  String
+  costToApply Float
+  active    Boolean  @default(true)
+  companyId String @db.ObjectId 
+  company   Company  @relation(fields: [companyId], references: [id])
+  applications Application[]
+}
+
+model Student {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  email       String  @unique
+  password    String
+  code        String
+  active    Boolean  @default(true)
+  balance     Float    @default(300)
+  role     Roles?    @default(Student)
+  applications Application[]
+  transactions Transaction[]
+}
+
+model Application {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  studentId String
+  jobRoleId String
+  active    Boolean  @default(true)
+  student   Student  @relation(fields: [studentId], references: [id])
+  jobRole   JobRole  @relation(fields: [jobRoleId], references: [id])
+}
+
+model Transaction {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  amount    Float
+  type      TransactionType
+  studentId String?
+  companyId String?
+  student   Student? @relation(fields: [studentId], references: [id])
+  company   Company? @relation(fields: [companyId], references: [id])
+}
+
+enum TransactionType {
+  CREDIT
+  DEBIT
+}
+enum Roles {
+  Company
+  Student
+}
